@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
+import reactPlugin from "eslint-plugin-react";
 
 export default [
   js.configs.recommended,
@@ -24,19 +25,29 @@ export default [
       parser: tsParser,
       parserOptions: {
         project: "./tsconfig.json",
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        window: "readonly",
+        document: "readonly",
+        localStorage: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly",
+        confirm: "readonly",
       },
     },
     plugins: {
       "@typescript-eslint": tseslint,
+      react: reactPlugin,
     },
     rules: {
-      // Your custom rules here
+      "no-undef": "off",
+      "react/react-in-jsx-scope": "off",
+      "no-unused-vars": ["error", { "args": "after-used", "ignoreRestSiblings": true }],
     },
-  },
-  {
-    languageOptions: {
-      globals: {
-        document: "readonly",
+    settings: {
+      react: {
+        version: "detect",
       },
     },
   },
